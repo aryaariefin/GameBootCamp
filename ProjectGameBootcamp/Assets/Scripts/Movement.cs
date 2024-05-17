@@ -7,6 +7,7 @@ public class Movement : MonoBehaviour
     public Collider2D colliderhead;
     public Transform groundCheck;
     public LayerMask groundLayer;
+    public float groundRadius = 0.15f;
     bool isGrounded;
     float speed = 5f;
     public Rigidbody2D rb;
@@ -23,7 +24,7 @@ public class Movement : MonoBehaviour
     {
         // my = Input.GetAxisRaw("Vertical");
         //mx = Input.GetAxisRaw("Horizontal");
-        isGrounded = Physics2D.OverlapCapsule(groundCheck.position, new Vector2(1.0f, 0.15f), CapsuleDirection2D.Horizontal, 0, groundLayer);
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, groundLayer);
         if (Input.GetKeyDown(KeyCode.W) && isGrounded)
         {
             rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
@@ -56,5 +57,11 @@ public class Movement : MonoBehaviour
             colliderhead.enabled = true;
             jumpPower = 5;
         }
+    }
+    void OnDrawGizmos()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(groundCheck.position, groundRadius);
     }
 }

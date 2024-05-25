@@ -11,6 +11,7 @@ public class Movement : MonoBehaviour
     bool isGrounded;
     float speed = 5f;
     public Rigidbody2D rb;
+    private bool facingRight = true;
     //float mx, my;
     [SerializeField] float jumpPower;
     // Start is called before the first frame update
@@ -57,11 +58,29 @@ public class Movement : MonoBehaviour
             colliderhead.enabled = true;
             jumpPower = 5;
         }
+        FlipController();
     }
     void OnDrawGizmos()
     {
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(groundCheck.position, groundRadius);
+    }
+
+    private void FlipController()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        if (mousePos.x < transform.position.x && facingRight)
+            Flip();
+        else if (mousePos.x > transform.position.x && !facingRight)
+            Flip();
+    }
+
+
+    private void Flip()
+    {
+        facingRight = !facingRight;
+        transform.Rotate(0, 180, 0);
     }
 }

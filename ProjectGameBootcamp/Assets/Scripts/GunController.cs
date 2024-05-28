@@ -7,9 +7,12 @@ public class GunController : MonoBehaviour
 {
     //[SerializeField] private Animator gunAnim;
     [SerializeField] private Transform gun;
-    [SerializeField] private float gunDistance = 0.5f;
-    [SerializeField] private GameObject bullet;
-    [SerializeField] private Transform bulletSpawnPoint;
+    [SerializeField] private float gunDistance = 0.1f;
+    public GameObject bullet;
+    public Transform bulletTransform;
+    public bool canFire;
+    private float timer;
+    public float timeBetweenFiring;
     private bool gunFacingRight = true;
 
     private GameObject bulletInst;
@@ -25,8 +28,23 @@ public class GunController : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         gun.position = transform.position + Quaternion.Euler(0, 0, angle) * new Vector3(gunDistance, 0, 0);
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (!canFire)
+        {
+            timer += Time.deltaTime;
+            if (timer > timeBetweenFiring)
+            {
+                canFire = true;
+                timer = 0;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0) && canFire)
+        {
+            canFire = false;
             Shoot();
+
+        }
+            
 
         GunFlipController(mousePos);
 
@@ -55,6 +73,7 @@ public class GunController : MonoBehaviour
     {
         //gunAnim.SetTrigger("Shoot");
         Debug.Log("shoot");
+        Instantiate(bullet,bulletTransform.position, Quaternion.identity);
     }
 
    /* private void HandleGunShooting()

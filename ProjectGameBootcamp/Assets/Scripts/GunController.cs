@@ -9,6 +9,7 @@ public class GunController : MonoBehaviour
     [SerializeField] private Transform gun;
     [SerializeField] private float gunDistance = 0.1f;
     public GameObject bullet;
+    public float destroyTime = 0.01f;
     public Transform bulletTransform;
     public bool canFire;
     private float timer;
@@ -38,7 +39,7 @@ public class GunController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && canFire)
+        if (Input.GetKey(KeyCode.Mouse0) && canFire)
         {
             canFire = false;
             Shoot();
@@ -71,12 +72,22 @@ public class GunController : MonoBehaviour
 
     public void Shoot()
     {
-        //gunAnim.SetTrigger("Shoot");
-        Debug.Log("shoot");
-        Instantiate(bullet,bulletTransform.position, Quaternion.identity);
+        
+        GameObject gm = Instantiate(bullet,bulletTransform.position, Quaternion.identity);
+        Destroy(gm, destroyTime);
     }
 
-   /* private void HandleGunShooting()
+    /* private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Land")
+        {
+            GameObject gm
+            Destroy(gm, destroyTime);
+        }
+    }
+
+
+    private void HandleGunShooting()
     {
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {

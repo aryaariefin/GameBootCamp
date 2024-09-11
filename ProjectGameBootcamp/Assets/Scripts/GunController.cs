@@ -8,14 +8,10 @@ public class GunController : MonoBehaviour
     //[SerializeField] private Animator gunAnim;
     [SerializeField] private Transform gun;
     [SerializeField] private float gunDistance = 0.1f;
-    public GameObject bullet;
-    public float destroyTime = 0.01f;
-    public Transform bulletTransform;
-    public bool canFire;
-    private float timer;
-    public float timeBetweenFiring;
+   
     private bool gunFacingRight = true;
 
+    public Weapon weapon;
     private GameObject bulletInst;
 
     // Update is called once per frame
@@ -29,21 +25,11 @@ public class GunController : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         gun.position = transform.position + Quaternion.Euler(0, 0, angle) * new Vector3(gunDistance, 0, 0);
 
-        if (!canFire)
-        {
-            timer += Time.deltaTime;
-            if (timer > timeBetweenFiring)
-            {
-                canFire = true;
-                timer = 0;
-            }
-        }
+        
 
-        if (Input.GetKey(KeyCode.Mouse0) && canFire)
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            canFire = false;
-            Shoot();
-
+            weapon.Reload();
         }
             
 
@@ -70,12 +56,7 @@ public class GunController : MonoBehaviour
         gun.localScale = new Vector3(gun.localScale.x, gun.localScale.y * -1, gun.localScale.z);
     }
 
-    public void Shoot()
-    {
-        
-        GameObject gm = Instantiate(bullet,bulletTransform.position, Quaternion.identity);
-        Destroy(gm, destroyTime);
-    }
+    
 
     /* private void OnCollisionEnter2D(Collision2D collision)
     {

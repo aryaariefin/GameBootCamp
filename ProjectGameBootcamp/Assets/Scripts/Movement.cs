@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public Collider2D colliderhead;
+    public Collider2D colliderCrouch;
+    public Collider2D colliderBody;
     public Transform groundCheck;
     public LayerMask groundLayer;
     public float groundRadius = 0.15f;
-    bool isGrounded;
+    bool isGrounded;    
     float speed = 5f;
     public Rigidbody2D rb;
     private bool facingRight = true;
@@ -18,6 +19,7 @@ public class Movement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        colliderCrouch.enabled = false;
     }
 
     // Update is called once per frame
@@ -50,12 +52,15 @@ public class Movement : MonoBehaviour
         transform.position = position;
         if (Input.GetKeyDown(KeyCode.S))
         {
-            colliderhead.enabled = false;
+            colliderCrouch.enabled = true;
+            colliderBody.enabled = false;
+
             jumpPower = 0;
         }
         else if (Input.GetKeyUp(KeyCode.S))
         {
-            colliderhead.enabled = true;
+            colliderBody.enabled = true;
+            colliderCrouch.enabled = false;
             jumpPower = 5;
         }
         FlipController();

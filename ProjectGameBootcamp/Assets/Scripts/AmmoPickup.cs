@@ -7,10 +7,11 @@ public class AmmoPickup : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Weapon weapon = collision.gameObject.GetComponentInChildren<Weapon>();
-        if (weapon)
+        if (weapon != null)
         {
             weapon.AddAmmo(weapon.maxAmmoSize);
             Destroy(gameObject);
+            Debug.Log("hadir");
         }
     }
 }

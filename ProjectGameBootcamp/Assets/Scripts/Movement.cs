@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
     public Collider2D colliderBody;
     public Transform groundCheck;
     public LayerMask groundLayer;
+    //[SerializeField] private Animator anim;
     public float groundRadius = 0.15f;
     bool isGrounded;    
     float speed = 5f;
@@ -44,10 +45,12 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             position.x -= speed * Time.deltaTime;
+           // anim.SetTrigger("Move");
         }
         else if (Input.GetKey(KeyCode.D))
         {
             position.x += speed * Time.deltaTime;
+            //sanim.SetTrigger("Move");
         }
         transform.position = position;
         if (Input.GetKeyDown(KeyCode.S))

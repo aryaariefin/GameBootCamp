@@ -63,4 +63,12 @@ public class Weapon : MonoBehaviour
             currentAmmo = maxAmmoSize;
         }
     }
+    private void OnTriggerEnter2D(Collider2D bullet)
+    {
+        if (bullet.tag == "Enemy")
+        {
+            //other.GetComponent<Enemy>().TakeDamage(damage);
+            Debug.Log("Enemy Hit");
+        }
+    }
 }

@@ -26,4 +26,11 @@ public class bulletScript : MonoBehaviour
     {
         
     }
+    void OnTriggerEnter2D (Collider2D collision)
+    {
+        if (collision.tag == "Enemy")
+        {
+            Debug.Log("ANJAY");
+        }
+    }
 }

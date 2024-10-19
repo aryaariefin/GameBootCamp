@@ -31,6 +31,11 @@ public class bulletScript : MonoBehaviour
         if (collision.tag == "Enemy")
         {
             Debug.Log("ANJAY");
+            Destroy(gameObject);
+        }
+        if (collision.tag == "Land")
+        {
+            Destroy(gameObject);
         }
     }
 }

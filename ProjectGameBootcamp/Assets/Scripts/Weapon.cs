@@ -7,10 +7,13 @@ public class Weapon : MonoBehaviour
     public GameObject bullet;
     public float destroyTime = 0.01f;
     public Transform bulletTransform;
+    public Transform grenadeTransform;
     public bool canFire;
+    public GameObject grenade;
+    public GameObject splash;
     private float timer;
     public float timeBetweenFiring;
-    public int currentClip, maxClipSize, currentAmmo, maxAmmoSize;
+    public int currentClip, maxClipSize, currentAmmo, maxAmmoSize, currentGrenade, maxGrenadeSize;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +38,12 @@ public class Weapon : MonoBehaviour
             canFire = false;
             Shoot();
 
+        }
+
+        if (Input.GetKeyDown(KeyCode.G) && canFire)
+        {
+            canFire = false;
+            Grenade();
         }
     }
     public void Shoot()
@@ -62,6 +71,24 @@ public class Weapon : MonoBehaviour
         {
             currentAmmo = maxAmmoSize;
         }
+        
+    }
+    public void AddGrenade(int grenadeAmount)
+    {
+        currentGrenade += grenadeAmount;
+        if(currentGrenade > maxGrenadeSize)
+        {
+            currentGrenade = maxGrenadeSize;
+        }
+    }
+    public void Grenade()
+    {
+        if (currentGrenade > 0)
+        {
+            GameObject go = Instantiate(grenade, grenadeTransform.position, Quaternion.identity);
+            Destroy(go, destroyTime);
+            currentGrenade--;
+        }
     }
     private void OnTriggerEnter2D(Collider2D bullet)
     {
@@ -70,5 +97,7 @@ public class Weapon : MonoBehaviour
             //other.GetComponent<Enemy>().TakeDamage(damage);
             Debug.Log("Enemy Hit");
         }
+        
     }
+  
 }

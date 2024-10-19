@@ -21,6 +21,6 @@ public class AmmoText : MonoBehaviour
 
     public void UpdateAmmoText()
     {
-        text.text = $"{weapon.currentClip} / {weapon.maxClipSize} | {weapon.currentAmmo} / {weapon.maxAmmoSize}";
+        text.text = $"{weapon.currentClip} / {weapon.maxClipSize} | {weapon.currentAmmo} / {weapon.maxAmmoSize} | {weapon.currentGrenade} / {weapon.maxGrenadeSize}";
     }
 }

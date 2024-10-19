@@ -10,8 +10,8 @@ public class AmmoPickup : MonoBehaviour
         if (weapon != null)
         {
             weapon.AddAmmo(weapon.maxAmmoSize);
+            weapon.AddGrenade(weapon.maxGrenadeSize);
             Destroy(gameObject);
-            Debug.Log("hadir");
         }
     }
 }
